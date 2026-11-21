@@ -79,6 +79,22 @@ final class SDKRuntimeTests: XCTestCase {
         XCTAssertEqual(decodedExec.actionId, "test.run")
         XCTAssertEqual(decodedExec.payload["a"], "1")
         XCTAssertEqual(decodedExec.hostContext?["hostVersion"], "0.2.14")
+
+        // PluginActionEffectDTO options round-trip + backward compatibility when options omitted
+        let effectWithOptions = PluginActionEffectDTO(
+            kind: "openAI",
+            value: "Explain Sendable",
+            options: ["title": "解释代码", "systemPrompt": "Be concise", "autoSend": "true"]
+        )
+        let encodedEffect = try JSONEncoder().encode(effectWithOptions)
+        let decodedEffect = try JSONDecoder().decode(PluginActionEffectDTO.self, from: encodedEffect)
+        XCTAssertEqual(decodedEffect, effectWithOptions)
+
+        let legacyEffectJSON = #"{"kind":"copy","value":"abc","toast":"已复制"}"#
+        let decodedLegacy = try JSONDecoder().decode(PluginActionEffectDTO.self, from: Data(legacyEffectJSON.utf8))
+        XCTAssertEqual(decodedLegacy.kind, "copy")
+        XCTAssertEqual(decodedLegacy.value, "abc")
+        XCTAssertNil(decodedLegacy.options)
     }
 
     func testSidecarSessionRoutesSearchExecuteCancelAndShutdown() async throws {
@@ -209,7 +225,7 @@ final class SDKRuntimeTests: XCTestCase {
         let pluginsDir = packageRoot.appendingPathComponent("plugins", isDirectory: true)
         let allowedPermissions: Set<String> = [
             "clipboard.write", "openURL", "openFile", "revealInFinder",
-            "openTerminal", "openApplication", "prefill", "toast", "secrets", "refresh"
+            "openTerminal", "openApplication", "openAI", "prefill", "toast", "secrets", "refresh"
         ]
         let expectedIDs: Set<String> = [
             "com.donts.kill-process",
@@ -217,6 +233,7 @@ final class SDKRuntimeTests: XCTestCase {
             "com.donts.file-search",
             "com.donts.chrome",
             "com.donts.terminal-finder",
+            "com.donts.quick-ai",
             "com.example.hello-sidecar"
         ]
 

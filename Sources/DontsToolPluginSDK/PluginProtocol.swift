@@ -153,6 +153,7 @@ public struct PluginBadgeDTO: Codable, Equatable, Sendable {
 public struct PluginActionEffectDTO: Codable, Equatable, Sendable {
     public let kind: String
     public let value: String?
+    public let options: [String: String]?
     public let toast: String?
     public let refresh: Bool?
     public let recordUsageKey: String?
@@ -160,12 +161,14 @@ public struct PluginActionEffectDTO: Codable, Equatable, Sendable {
     public init(
         kind: String,
         value: String? = nil,
+        options: [String: String]? = nil,
         toast: String? = nil,
         refresh: Bool? = nil,
         recordUsageKey: String? = nil
     ) {
         self.kind = kind
         self.value = value
+        self.options = options
         self.toast = toast
         self.refresh = refresh
         self.recordUsageKey = recordUsageKey

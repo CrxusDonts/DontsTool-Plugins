@@ -1,6 +1,6 @@
 # DontsTool Plugins
 
-[DontsTool](https://github.com/CrxusDonts/DontsTool) 的官方插件集合仓库，配套已正式发布的 DontsTool `v0.3.0`（及 `0.2.14+`）微内核插件架构。仓库采用 SwiftPM 多插件 Monorepo 结构，同时包含一个零依赖 Python 示例插件，通过标准 NDJSON over stdio（JSON-RPC 2.0）协议与主程序进程外通信。
+[DontsTool](https://github.com/CrxusDonts/DontsTool) 的配套插件仓库，把平时自己会用到、但不想塞进主程序的几个小功能拆成了独立 Sidecar 插件，顺手一并开源。仓库采用 SwiftPM 多插件 Monorepo 结构，同时包含一个零依赖 Python 示例插件，通过标准 NDJSON over stdio（JSON-RPC 2.0）协议与主程序进程外通信。
 
 关于完整的插件架构、协议字段、权限模型与第三方仓库规范，请参阅主仓库的 [插件使用与开发指南](https://github.com/CrxusDonts/DontsTool/blob/main/docs/plugins.md)。
 
@@ -9,14 +9,14 @@
 DontsTool `v0.3.0` 已默认内置本仓库（`CrxusDonts/DontsTool-Plugins`）作为官方插件源，无需额外配置即可使用：
 
 1. 打开 **DontsTool 设置 → 插件**，页面会自动拉取「DontsTool 官方插件仓库」的最新目录（`releases/latest/download/catalog.json`）。
-2. 在官方插件源顶部点击 **安装全部推荐插件** 可批量安装全部 5 个官方 Swift 插件，也可在下方列表中逐个点击 **安装**（包含示例插件 `com.example.hello-sidecar`）。
+2. 在官方插件源顶部点击 **安装全部推荐插件** 可批量安装全部官方 Swift 插件，也可在下方列表中逐个点击 **安装**（包含示例插件 `com.example.hello-sidecar`）。
 3. 每次安装或更新前，DontsTool 会先下载压缩包并核验 SHA-256 与 `manifest.json`，再弹出确认框列出插件版本、来源仓库、关键词及申请权限；点击确认后才会原子写入用户插件目录并热重载生效。
 4. 如需手动重新添加本源或其他第三方仓库，可在 **添加插件源** 中输入 `CrxusDonts/DontsTool-Plugins`、GitHub 仓库链接或 `https://…/catalog.json` 地址，点击 **添加源**。
 5. 在 **已安装插件** 区块中，可通过开关随时启用或停用插件、点击 **检查更新** / **更新** 升级到新版本，或点击 **卸载** 移除插件文件并立即停止其进程（已保存的插件偏好设置会保留）。
 
 ## 仓库插件清单
 
-全部 5 个官方插件均以 Universal（`arm64` + `x86_64`）原生二进制打包发布，另附 1 个 Python 脚本示例插件供多语言开发参考：
+全部 6 个官方插件均以 Universal（`arm64` + `x86_64`）原生二进制打包发布，另附 1 个 Python 脚本示例插件供多语言开发参考：
 
 | 插件 ID | 名称 | 触发关键词 | 功能简介 | 运行模式 | 声明权限 | 系统授权与运行说明 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -25,6 +25,7 @@ DontsTool `v0.3.0` 已默认内置本仓库（`CrxusDonts/DontsTool-Plugins`）�
 | `com.donts.file-search` | 文件搜索 | `file` | 调用 Spotlight（`/usr/bin/mdfind`）在用户主目录内检索本地文件，结果归入原生文件分组，支持行内定位、复制路径与在终端打开 | `daemon`（`slow`） | `openFile`、`revealInFinder`、`clipboard.write`、`openTerminal`、`prefill`、`toast` | 依赖系统 Spotlight 索引；访问受保护目录时按需复用 macOS 文件访问或完全磁盘访问权限 |
 | `com.donts.chrome` | Google Chrome | `chrome`、`ch`、`tab`、`tabs`、`标签页`、`bm`、`书签` | 检索、切换与关闭已打开标签页，读取多 Profile 书签与历史记录，支持普通或无痕窗口打开 | `daemon`（`fast`） | `clipboard.write`、`openURL`、`prefill`、`toast`、`refresh` | 读取/控制标签页需在「系统设置 → 隐私与安全性 → 自动化」中允许 DontsTool 控制 Google Chrome；历史记录通过临时副本只读访问，不锁定浏览器数据库 |
 | `com.donts.terminal-finder` | 终端与访达 | `tf`、`ft`、`term`、`终端` | 在访达与 Ghostty / Warp / iTerm2 / 系统终端 / WezTerm / Kitty / Alacritty / OrcaTerm 之间双向跳转当前目录，支持 `tf ~/Desktop` 直接路径 | `daemon`（`fast`） | `clipboard.write`、`openFile`、`revealInFinder`、`openTerminal`、`openApplication`、`prefill`、`toast` | 读取访达、iTerm2 或系统「终端」路径需 macOS「自动化」权限；其余终端通过进程树工作目录自动识别，并读取宿主首选终端设置 |
+| `com.donts.quick-ai` | AI 快问 | `ai`、`ask`、`问` | 通过自由提问或 5 个预设场景（`code`/`fix`/`polish`/`cmd`/`sum`）调用宿主大模型，在原生流式窗口中即时问答 | `daemon`（`fast`） | `openAI`、`prefill` | 需要 DontsTool `0.4.0+`，并在宿主 **设置 → AI 与翻译** 中配置大模型服务；插件本身不联网也不接触 API 密钥 |
 | `com.example.hello-sidecar` | Hello Sidecar 示例 | `hello` | 演示多语言 NDJSON JSON-RPC 2.0 协议、剪贴板写入与 `execute` 回调的最小示例 | `daemon`（`fast`，Python） | `clipboard.write`、`prefill`、`toast` | 无需额外系统授权；依赖本机 `python3`（在目录中标记为非官方示例，不随「安装全部推荐插件」自动安装） |
 
 ## 仓库结构
@@ -39,17 +40,19 @@ DontsTool-Plugins/
 │   ├── IDEProjectsCore/ & IDEProjectsPlugin/
 │   ├── FileSearchCore/  & FileSearchPlugin/
 │   ├── ChromeCore/      & ChromePlugin/
-│   └── TerminalFinderCore/ & TerminalFinderPlugin/
+│   ├── TerminalFinderCore/ & TerminalFinderPlugin/
+│   └── QuickAICore/     & QuickAIPlugin/
 ├── plugins/
 │   ├── com.donts.kill-process/manifest.json
 │   ├── com.donts.idea-projects/manifest.json
 │   ├── com.donts.file-search/manifest.json
 │   ├── com.donts.chrome/manifest.json
 │   ├── com.donts.terminal-finder/manifest.json
+│   ├── com.donts.quick-ai/manifest.json
 │   └── com.example.hello-sidecar/            # Python 脚本插件源码与清单
 │       ├── manifest.json
 │       └── bin/run
-├── Tests/DontsToolPluginsTests/              # SDK 与全部 5 个插件的单元测试
+├── Tests/DontsToolPluginsTests/              # SDK 与全部 6 个 Swift 插件的单元测试
 ├── scripts/build-release.sh                  # 构建、ad-hoc 签名、打包 zip 并生成 catalog.json
 └── .github/workflows/release.yml             # CI 测试、冒烟校验与 tag v* 自动发版
 ```

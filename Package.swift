@@ -31,6 +31,10 @@ let package = Package(
         .executable(
             name: "TerminalFinderPlugin",
             targets: ["TerminalFinderPlugin"]
+        ),
+        .executable(
+            name: "QuickAIPlugin",
+            targets: ["QuickAIPlugin"]
         )
     ],
     targets: [
@@ -78,6 +82,14 @@ let package = Package(
             name: "TerminalFinderPlugin",
             dependencies: ["DontsToolPluginSDK", "TerminalFinderCore"]
         ),
+        .target(
+            name: "QuickAICore",
+            dependencies: ["DontsToolPluginSDK"]
+        ),
+        .executableTarget(
+            name: "QuickAIPlugin",
+            dependencies: ["DontsToolPluginSDK", "QuickAICore"]
+        ),
         .testTarget(
             name: "DontsToolPluginsTests",
             dependencies: [
@@ -86,7 +98,8 @@ let package = Package(
                 "IDEProjectsCore",
                 "FileSearchCore",
                 "ChromeCore",
-                "TerminalFinderCore"
+                "TerminalFinderCore",
+                "QuickAICore"
             ]
         )
     ]

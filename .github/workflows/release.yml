@@ -48,7 +48,7 @@ jobs:
           import glob, json, os, subprocess, tempfile
 
           zips = sorted(glob.glob("dist/*.dontsplugin.zip"))
-          assert len(zips) == 6, f"Expected 6 zips, found {len(zips)}"
+          assert len(zips) == 7, f"Expected 7 zips, found {len(zips)}"
 
           for zpath in zips:
               with tempfile.TemporaryDirectory() as tmp:
@@ -71,7 +71,12 @@ jobs:
                               "query": "",
                               "rawQuery": keyword,
                               "preferences": {},
-                              "hostContext": {"hostVersion": "0.2.14"},
+                              "hostContext": {
+                                  "hostVersion": "0.4.0",
+                                  "aiConfigured": "true",
+                                  "aiFormat": "gemini",
+                                  "aiModel": "gemini-2.5-flash",
+                              },
                           },
                       })
                       + "\n"

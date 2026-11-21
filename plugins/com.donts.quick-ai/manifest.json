@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "com.donts.quick-ai",
+  "name": "AI 快问",
+  "version": "1.0.0",
+  "description": "通过 ai 关键词或预设场景调用宿主大模型，在原生流式窗口中即时问答、解释代码与排查报错",
+  "minHostVersion": "0.4.0",
+  "keywords": ["ai", "ask", "问"],
+  "supportsGlobalSearch": false,
+  "globalAliases": ["ai", "ask", "chat", "gemini", "问答", "大模型"],
+  "phase": "fast",
+  "runsOnEmptyArgument": true,
+  "priority": 45,
+  "homeEntry": {
+    "canonicalKey": "plugin.com.donts.quick-ai.home",
+    "title": "AI 快问",
+    "subtitle": "ai 加问题 · 原生流式问答（复用宿主模型配置）",
+    "symbol": "sparkles",
+    "tint": "blue",
+    "score": 860
+  },
+  "runtime": {
+    "mode": "daemon",
+    "command": ["bin/QuickAIPlugin"],
+    "timeoutMs": 1500,
+    "idleTimeoutSec": 300
+  },
+  "permissions": [
+    "openAI",
+    "prefill"
+  ],
+  "preferences": [
+    {
+      "key": "defaultSystemPrompt",
+      "type": "string",
+      "title": "默认系统提示词",
+      "required": false,
+      "defaultValue": ""
+    }
+  ]
+}

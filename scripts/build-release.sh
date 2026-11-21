@@ -59,6 +59,7 @@ SWIFT_PLUGINS=(
     "com.donts.file-search:FileSearchPlugin:true"
     "com.donts.chrome:ChromePlugin:true"
     "com.donts.terminal-finder:TerminalFinderPlugin:true"
+    "com.donts.quick-ai:QuickAIPlugin:true"
 )
 
 SCRIPT_PLUGINS=(
