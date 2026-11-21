@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "com.donts.chrome",
+  "name": "Google Chrome",
+  "version": "1.0.0",
+  "description": "搜索、切换与关闭 Google Chrome 标签页，并检索书签与浏览历史",
+  "minHostVersion": "0.2.14",
+  "keywords": ["chrome", "ch", "tab", "tabs", "标签页", "bm", "书签"],
+  "supportsGlobalSearch": false,
+  "globalAliases": ["chrome", "google chrome", "tab", "tabs", "bookmark", "bookmarks", "书签", "标签页", "浏览器历史"],
+  "phase": "fast",
+  "runsOnEmptyArgument": true,
+  "priority": 50,
+  "homeEntry": {
+    "canonicalKey": "chrome:entry",
+    "title": "Google Chrome",
+    "subtitle": "输入 chrome 搜索标签页、书签和历史（tab 只搜标签页，bm 只搜书签）",
+    "symbol": "globe",
+    "tint": "blue",
+    "score": 900
+  },
+  "runtime": {
+    "mode": "daemon",
+    "command": ["bin/ChromePlugin"],
+    "timeoutMs": 2000,
+    "idleTimeoutSec": 300
+  },
+  "permissions": [
+    "clipboard.write",
+    "openURL",
+    "prefill",
+    "toast",
+    "refresh"
+  ]
+}

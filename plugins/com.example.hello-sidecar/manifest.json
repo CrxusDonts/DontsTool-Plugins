@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "com.example.hello-sidecar",
+  "name": "Hello Sidecar 示例",
+  "version": "1.0.0",
+  "description": "纯 Python 脚本 Sidecar 示例插件，演示多语言 NDJSON JSON-RPC 2.0 协议",
+  "minHostVersion": "0.2.14",
+  "keywords": ["hello"],
+  "supportsGlobalSearch": false,
+  "globalAliases": ["hello", "hello sidecar", "示例插件"],
+  "phase": "fast",
+  "runsOnEmptyArgument": true,
+  "priority": 30,
+  "homeEntry": {
+    "canonicalKey": "hello-sidecar:entry",
+    "title": "Hello Sidecar 示例",
+    "subtitle": "输入 hello <任意内容> 体验脚本型 Sidecar 插件",
+    "symbol": "sparkles",
+    "tint": "amber",
+    "score": 700
+  },
+  "runtime": {
+    "mode": "daemon",
+    "command": ["bin/run"],
+    "timeoutMs": 1500,
+    "idleTimeoutSec": 120
+  },
+  "permissions": [
+    "clipboard.write",
+    "prefill",
+    "toast"
+  ]
+}

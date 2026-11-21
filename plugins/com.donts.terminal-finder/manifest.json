@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "id": "com.donts.terminal-finder",
+  "name": "终端与访达",
+  "version": "1.0.0",
+  "description": "在访达与 Ghostty / Warp / iTerm2 / 终端等终端应用之间双向跳转当前目录",
+  "minHostVersion": "0.2.14",
+  "keywords": ["tf", "ft", "term", "终端"],
+  "supportsGlobalSearch": false,
+  "globalAliases": [
+    "tf",
+    "ft",
+    "term",
+    "terminal",
+    "finder",
+    "terminal finder",
+    "终端",
+    "访达",
+    "终端与访达",
+    "访达转终端",
+    "终端转访达",
+    "ghostty",
+    "otty",
+    "warp",
+    "iterm",
+    "iterm2"
+  ],
+  "phase": "fast",
+  "runsOnEmptyArgument": true,
+  "priority": 50,
+  "homeEntry": {
+    "canonicalKey": "terminal-finder:entry",
+    "title": "终端与访达",
+    "subtitle": "输入 tf 在访达与 Ghostty / Warp / iTerm2 / 终端之间双向跳转",
+    "symbol": "terminal",
+    "tint": "teal",
+    "score": 896
+  },
+  "runtime": {
+    "mode": "daemon",
+    "command": ["bin/TerminalFinderPlugin"],
+    "timeoutMs": 2000,
+    "idleTimeoutSec": 300
+  },
+  "permissions": [
+    "clipboard.write",
+    "openFile",
+    "revealInFinder",
+    "openTerminal",
+    "openApplication",
+    "prefill",
+    "toast"
+  ]
+}

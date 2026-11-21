@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "com.donts.file-search",
+  "name": "文件搜索",
+  "version": "1.0.0",
+  "description": "输入 file 关键词，在用户主目录内通过 Spotlight 快速检索本地文件",
+  "minHostVersion": "0.2.14",
+  "keywords": ["file"],
+  "supportsGlobalSearch": false,
+  "globalAliases": ["file", "files", "文件", "文件搜索", "搜索文件"],
+  "phase": "slow",
+  "runsOnEmptyArgument": false,
+  "priority": 50,
+  "homeEntry": {
+    "canonicalKey": "file:entry",
+    "title": "文件搜索",
+    "subtitle": "输入 file 关键词，在主目录内检索本地文件",
+    "symbol": "doc.text.magnifyingglass",
+    "tint": "blue",
+    "score": 895
+  },
+  "runtime": {
+    "mode": "daemon",
+    "command": ["bin/FileSearchPlugin"],
+    "timeoutMs": 2000,
+    "idleTimeoutSec": 300
+  },
+  "permissions": [
+    "openFile",
+    "revealInFinder",
+    "clipboard.write",
+    "openTerminal",
+    "prefill",
+    "toast"
+  ]
+}

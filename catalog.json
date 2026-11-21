@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "sourceName": "DontsTool 官方插件仓库",
+  "plugins": [
+    {
+      "id": "com.donts.kill-process",
+      "name": "结束进程",
+      "summary": "kill / kp 按名称、PID 或 :端口 列出并结束运行中的进程",
+      "version": "1.0.0",
+      "minHostVersion": "0.2.14",
+      "downloadURL": "https://github.com/CrxusDonts/DontsTool-Plugins/releases/download/v1.0.0/com.donts.kill-process-1.0.0-macos.dontsplugin.zip",
+      "subpath": "plugins/com.donts.kill-process",
+      "sha256": "c6ea9953d42d6ab5bbef58e2491a8c2cc225a9c9cbe9ef0e1ac4bfdd5009f926",
+      "official": true
+    },
+    {
+      "id": "com.donts.idea-projects",
+      "name": "IDEA 项目",
+      "summary": "输入 idea 列出、筛选并用 IntelliJ IDEA 打开最近项目或本地目录",
+      "version": "1.0.0",
+      "minHostVersion": "0.2.14",
+      "downloadURL": "https://github.com/CrxusDonts/DontsTool-Plugins/releases/download/v1.0.0/com.donts.idea-projects-1.0.0-macos.dontsplugin.zip",
+      "subpath": "plugins/com.donts.idea-projects",
+      "sha256": "7e7f097e057fda162b9f84a4f95efb8428cea0097410b2970379e3bbc9247cff",
+      "official": true
+    },
+    {
+      "id": "com.donts.file-search",
+      "name": "文件搜索",
+      "summary": "输入 file 关键词，在用户主目录内通过 Spotlight 快速检索本地文件",
+      "version": "1.0.0",
+      "minHostVersion": "0.2.14",
+      "downloadURL": "https://github.com/CrxusDonts/DontsTool-Plugins/releases/download/v1.0.0/com.donts.file-search-1.0.0-macos.dontsplugin.zip",
+      "subpath": "plugins/com.donts.file-search",
+      "sha256": "e65c9581e1c3c24fe2178cbbd8bc37a9273d1741b2c168a931f08c8854e22e66",
+      "official": true
+    },
+    {
+      "id": "com.donts.chrome",
+      "name": "Google Chrome",
+      "summary": "搜索、切换与关闭 Google Chrome 标签页，并检索书签与浏览历史",
+      "version": "1.0.0",
+      "minHostVersion": "0.2.14",
+      "downloadURL": "https://github.com/CrxusDonts/DontsTool-Plugins/releases/download/v1.0.0/com.donts.chrome-1.0.0-macos.dontsplugin.zip",
+      "subpath": "plugins/com.donts.chrome",
+      "sha256": "e93c9c57985eb096e7589accdb05e42415661220501f6ab797d91ea1dc2f48ba",
+      "official": true
+    },
+    {
+      "id": "com.donts.terminal-finder",
+      "name": "终端与访达",
+      "summary": "在访达与 Ghostty / Warp / iTerm2 / 终端等终端应用之间双向跳转当前目录",
+      "version": "1.0.0",
+      "minHostVersion": "0.2.14",
+      "downloadURL": "https://github.com/CrxusDonts/DontsTool-Plugins/releases/download/v1.0.0/com.donts.terminal-finder-1.0.0-macos.dontsplugin.zip",
+      "subpath": "plugins/com.donts.terminal-finder",
+      "sha256": "e2f5ef952e279ce3d28f3adabf6267c6efee6b36dcddc923b08fbd9451ffe9b6",
+      "official": true
+    },
+    {
+      "id": "com.example.hello-sidecar",
+      "name": "Hello Sidecar 示例",
+      "summary": "纯 Python 脚本 Sidecar 示例插件，演示多语言 NDJSON JSON-RPC 2.0 协议",
+      "version": "1.0.0",
+      "minHostVersion": "0.2.14",
+      "downloadURL": "https://github.com/CrxusDonts/DontsTool-Plugins/releases/download/v1.0.0/com.example.hello-sidecar-1.0.0-macos.dontsplugin.zip",
+      "subpath": "plugins/com.example.hello-sidecar",
+      "sha256": "1bd916694023dc01d23e637cdb07fb52fceac021a7a12f52d66433984f567bdb",
+      "official": false
+    }
+  ]
+}

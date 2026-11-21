@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "com.donts.idea-projects",
+  "name": "IDEA 项目",
+  "version": "1.0.0",
+  "description": "输入 idea 列出、筛选并用 IntelliJ IDEA 打开最近项目或本地目录",
+  "minHostVersion": "0.2.14",
+  "keywords": ["idea"],
+  "supportsGlobalSearch": false,
+  "globalAliases": ["idea", "intellij", "jetbrains", "idea 项目"],
+  "phase": "fast",
+  "runsOnEmptyArgument": true,
+  "priority": 50,
+  "homeEntry": {
+    "canonicalKey": "idea-project:entry",
+    "title": "IDEA 项目",
+    "subtitle": "输入 idea 列出或筛选最近的 IntelliJ IDEA 项目",
+    "symbol": "folder",
+    "tint": "purple",
+    "score": 898
+  },
+  "runtime": {
+    "mode": "daemon",
+    "command": ["bin/IDEProjectsPlugin"],
+    "timeoutMs": 2000,
+    "idleTimeoutSec": 300
+  },
+  "permissions": [
+    "clipboard.write",
+    "revealInFinder",
+    "openTerminal",
+    "openApplication",
+    "prefill",
+    "toast"
+  ]
+}

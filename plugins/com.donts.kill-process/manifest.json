@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "com.donts.kill-process",
+  "name": "结束进程",
+  "version": "1.0.0",
+  "description": "kill / kp 按名称、PID 或 :端口 列出并结束运行中的进程",
+  "minHostVersion": "0.2.14",
+  "keywords": ["kill", "kp", "进程"],
+  "supportsGlobalSearch": false,
+  "globalAliases": ["kill", "kill process", "kp", "结束进程", "杀进程", "进程"],
+  "phase": "fast",
+  "runsOnEmptyArgument": true,
+  "priority": 50,
+  "homeEntry": {
+    "canonicalKey": "process:entry",
+    "title": "结束进程",
+    "subtitle": "输入 kill 进程名、PID 或 :端口号，列出并结束运行中的进程",
+    "symbol": "xmark.octagon",
+    "tint": "red",
+    "score": 899
+  },
+  "runtime": {
+    "mode": "daemon",
+    "command": ["bin/KillProcessPlugin"],
+    "timeoutMs": 2000,
+    "idleTimeoutSec": 300
+  },
+  "permissions": [
+    "clipboard.write",
+    "revealInFinder",
+    "prefill",
+    "toast",
+    "refresh"
+  ]
+}

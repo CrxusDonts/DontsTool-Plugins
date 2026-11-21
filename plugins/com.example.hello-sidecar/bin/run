@@ -1,0 +1,117 @@
+#!/usr/bin/env python3
+"""Minimal DontsTool NDJSON JSON-RPC 2.0 sidecar example plugin."""
+
+import json
+import sys
+
+
+def send(payload: dict) -> None:
+    sys.stdout.write(json.dumps(payload, ensure_ascii=False) + "\n")
+    sys.stdout.flush()
+
+
+def handle_search(req_id: int, params: dict) -> None:
+    query = (params.get("query") or "").strip()
+    host_context = params.get("hostContext") or {}
+    host_version = host_context.get("hostVersion") or "unknown"
+    greeting = f"Hello, {query}!" if query else "Hello from DontsTool Sidecar!"
+    subtitle = f"来自纯 Python 脚本插件（宿主版本：{host_version}）"
+
+    items = [
+        {
+            "title": greeting,
+            "subtitle": subtitle,
+            "score": 2000,
+            "canonicalKey": f"hello-sidecar:{query or 'default'}",
+            "icon": {"kind": "symbol", "value": "sparkles", "tint": "amber"},
+            "badge": {"text": "Python", "tint": "teal"},
+            "actions": [
+                {
+                    "id": "hello.copy",
+                    "title": "复制问候语",
+                    "symbol": "doc.on.doc",
+                    "presentation": "dismissThenRun",
+                    "effect": {
+                        "kind": "copy",
+                        "value": greeting,
+                        "toast": f"已复制：{greeting}",
+                        "recordUsageKey": "hello-sidecar:entry",
+                    },
+                },
+                {
+                    "id": "hello.echo",
+                    "title": "回调插件测试",
+                    "symbol": "bolt.circle",
+                    "presentation": "keepPanelOpen",
+                    "callback": True,
+                    "payload": {"text": greeting},
+                },
+            ],
+        }
+    ]
+    send({"jsonrpc": "2.0", "id": req_id, "result": {"items": items}})
+
+
+def handle_execute(req_id: int, params: dict) -> None:
+    action_id = params.get("actionId") or ""
+    payload = params.get("payload") or {}
+    if action_id == "hello.echo":
+        text = payload.get("text") or "Hello!"
+        send(
+            {
+                "jsonrpc": "2.0",
+                "id": req_id,
+                "result": {
+                    "effect": {"kind": "none"},
+                    "toast": f"Sidecar 回调成功：{text}",
+                    "recordUsageKey": "hello-sidecar:entry",
+                },
+            }
+        )
+        return
+
+    send(
+        {
+            "jsonrpc": "2.0",
+            "id": req_id,
+            "result": {"error": f"未知操作：{action_id}"},
+        }
+    )
+
+
+def main() -> None:
+    for raw_line in sys.stdin:
+        line = raw_line.strip()
+        if not line:
+            continue
+        try:
+            message = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+
+        method = message.get("method")
+        req_id = message.get("id")
+        params = message.get("params") or {}
+
+        if method == "shutdown":
+            if req_id is not None:
+                send({"jsonrpc": "2.0", "id": req_id, "result": {}})
+            break
+        if method == "cancel":
+            continue
+        if method == "search" and req_id is not None:
+            handle_search(req_id, params)
+        elif method == "execute" and req_id is not None:
+            handle_execute(req_id, params)
+        elif req_id is not None:
+            send(
+                {
+                    "jsonrpc": "2.0",
+                    "id": req_id,
+                    "error": {"code": -32601, "message": f"不支持的方法：{method}"},
+                }
+            )
+
+
+if __name__ == "__main__":
+    main()
