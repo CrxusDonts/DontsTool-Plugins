@@ -47,8 +47,12 @@ jobs:
           python3 - <<'PY'
           import glob, json, os, subprocess, tempfile
 
+          with open("dist/catalog.json", "r", encoding="utf-8") as f:
+              catalog_by_id = {entry["id"]: entry for entry in json.load(f)["plugins"]}
+
           zips = sorted(glob.glob("dist/*.dontsplugin.zip"))
           assert len(zips) == 7, f"Expected 7 zips, found {len(zips)}"
+          assert len(catalog_by_id) == 7, f"Expected 7 catalog entries, found {len(catalog_by_id)}"
 
           for zpath in zips:
               with tempfile.TemporaryDirectory() as tmp:
@@ -57,6 +61,11 @@ jobs:
                   assert os.path.isfile(manifest_path), f"Missing manifest.json in {zpath}"
                   with open(manifest_path, "r", encoding="utf-8") as f:
                       manifest = json.load(f)
+                  catalog_entry = catalog_by_id[manifest["id"]]
+                  subpath = catalog_entry.get("subpath")
+                  assert not subpath or os.path.isfile(os.path.join(tmp, subpath, "manifest.json")), (
+                      f"Invalid subpath {subpath!r} in catalog.json for standalone archive {zpath}"
+                  )
                   cmd = [os.path.join(tmp, manifest["runtime"]["command"][0])] + manifest["runtime"]["command"][1:]
                   assert os.access(cmd[0], os.X_OK), f"Entrypoint not executable: {cmd[0]}"
                   keyword = manifest["keywords"][0]

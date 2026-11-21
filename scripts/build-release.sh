@@ -150,7 +150,6 @@ entry = {
     "version": version,
     "minHostVersion": m.get("minHostVersion"),
     "downloadURL": download_url,
-    "subpath": f"plugins/{plugin_id}",
     "sha256": sha256,
     "official": official_str.lower() == "true",
 }
